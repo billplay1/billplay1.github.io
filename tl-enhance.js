@@ -60,7 +60,9 @@ var CSS=
 '.lv-tl-intro{font-size:17px!important;line-height:1.6}'+
 '.lv-clamp3{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}'+
 /* breadcrumb clears the fixed menu button (all pages) */
-'main>nav.sticky{padding-left:72px!important;min-height:48px;font-size:14px}'+
+'main>nav.sticky{padding-left:124px!important;min-height:48px;font-size:14px}'+
+'.lvx-seetl{display:inline-flex;align-items:center;min-height:40px;margin-top:8px;color:#ffd700;font-size:15px;text-decoration:underline;font-family:Lora,Georgia,serif}'+
+'.lvx-ppl a{color:#ffd700;text-decoration:underline;display:inline-flex;align-items:center;min-height:36px}'+
 'main:has(.lv-tl-top)>nav.sticky{background:#b9ab9c}'+
 '@media (max-width:699px){.lv-rail,.lv-tl-controls{display:none!important}}'+
 '@media (min-width:700px){.lvx-phone{display:none!important}}'+
@@ -142,7 +144,8 @@ var START=[
  "In 1868 the railroad's property was sold at foreclosure sales, and in 1872 the company was consolidated into the Texas and Pacific Railway.",
  "In 1888 a large part of the Texas and Pacific's land was placed in a new trust, the Texas Pacific Land Trust.",
  "From 1907 on, holders of the old Southern Pacific shares wrote to the railroad, and the railroad kept a file of its answers to them that runs from 1907 to 1980.",
- "The certificate stayed in the Thorne family and passed to John Stephen Thorne, whose lawsuits over it are set out step by step on <a href=\"/TheCase\" data-lvx-go=\"/TheCase\">The Case</a>; the most recent, a fraud claim over the railroad's 2011 answer, was brought in a complaint dated November 9, 2026, in the District Court of Douglas County, Nebraska."];
+ "The certificate stayed in the Thorne family and passed to John Stephen Thorne, whose lawsuits over it are set out step by step on <a href=\"/TheCase\" data-lvx-go=\"/TheCase\">The Case</a>; the most recent, a fraud claim over the railroad's 2011 answer, was brought in a complaint dated November 9, 2026, in the District Court of Douglas County, Nebraska.",
+ "To find a person, a date, a document or a dollar figure anywhere on the site, use <a href=\"/Search\" data-lvx-go=\"/Search\">Search</a>, the magnifier button at the top of every page."];
 var GLOSS=[
  ["SPRR","Southern Pacific Railroad Company of Texas, the Marshall railroad company that issued Certificate No. 1656 in 1859. It is not the later California Southern Pacific."],
  ["T&P","The Texas and Pacific Railway Company, chartered by Congress in 1871. The SPRR was consolidated into it in 1872."],
@@ -153,10 +156,11 @@ var GLOSS=[
  ["Thorne I / Thorne II","Thorne's 2015 and 2020 federal lawsuits against Union Pacific, set out on The Case."],
  ["UP_ numbers","Union Pacific's page numbers on the documents it produced in Thorne I, such as UP_003884."]];
 
+window.__lvTlGloss=GLOSS;
 function topHtml(){
  var seen=false;try{seen=localStorage.getItem("lvTlStartSeen")==="1";}catch(e){}
  var h='<details class="lvx-box lvx-start"'+(seen?'':' open')+'><summary><h2>Start here</h2><span class="tg"><span class="o">Show</span><span class="c">Hide</span></span></summary><div class="lvx-in">'+START.map(function(s){return '<p>'+s+'</p>';}).join("")+'</div></details>';
- h+='<details class="lvx-box lvx-gloss"><summary><h2>Words used on this page</h2><span class="tg"><span class="o">Show</span><span class="c">Hide</span></span></summary><div class="lvx-in"><dl class="lvx-gl">'+GLOSS.map(function(g){return '<dt>'+esc(g[0])+'</dt><dd>'+esc(g[1])+'</dd>';}).join("")+'</dl></div></details>';
+ h+='<details class="lvx-box lvx-gloss" id="glossary"><summary><h2>Words used on this page</h2><span class="tg"><span class="o">Show</span><span class="c">Hide</span></span></summary><div class="lvx-in"><dl class="lvx-gl">'+GLOSS.map(function(g){return '<dt>'+esc(g[0])+'</dt><dd>'+esc(g[1])+'</dd>';}).join("")+'</dl></div></details>';
  h+='<div class="lvx-legend" role="note"><b>Card colors:</b>'+LAYERS.map(function(l){return '<span><i class="lv-sw" style="background:'+l[2]+'"></i>'+esc(l[1])+'</span>';}).join("")+'</div>';
  h+='<div class="lvx-phone"><div class="lvx-ctl"><input type="search" placeholder="Search the timeline" aria-label="Search the timeline">'+
   '<div class="lvx-lbl">Show</div><div class="lvx-row lvx-groups">'+GROUPS.map(function(g,i){return '<button type="button" class="lvx-chip'+(i?'':' on')+'" data-g="'+g[0]+'">'+esc(g[1])+'</button>';}).join("")+'</div>'+
@@ -214,8 +218,8 @@ function srcHtml(s){s=dash(s||"").trim();if(!s)return "";var parts=s.split(/;\s+
  return '<ul>'+parts.map(function(p){var out="",i=0,re=/https?:\/\/[^\s<>"]+[^\s<>".,;:)\]]/g,m;while((m=re.exec(p))){out+=esc(p.slice(i,m.index))+'<a href="'+esc(m[0])+'" target="_blank" rel="noopener">'+esc(m[0])+'</a>';i=m.index+m[0].length;}out+=esc(p.slice(i));return '<li>'+out+'</li>';}).join("")+'</ul>';}
 function list4nav(){if(phone()&&ctxIds.length)return ctxIds;if(!phone()&&dq&&dIds.length)return dIds;return events().map(function(e){return e.id;});}
 function relHtml(e){var LV=window.__LV||{},P=LV.Person||[],D=LV.Document||[],h="";
- var names=[];(e.persons||[]).forEach(function(x){var n=null;for(var i=0;i<P.length;i++){if(P[i].id===x){n=P[i].name;break;}}if(!n)n=x;n=String(n||"").trim();if(n&&names.indexOf(n)<0)names.push(n);});
- if(names.length)h+='<section class="lvx-src lvx-ppl"><h3>People in this entry</h3><ul>'+names.map(function(n){return '<li>'+esc(dash(n))+'</li>';}).join("")+'</ul></section>';
+ var names=[],pids={};(e.persons||[]).forEach(function(x){var n=null,pid=null;for(var i=0;i<P.length;i++){if(P[i].id===x||P[i].name===x){n=P[i].name;pid=P[i].id;break;}}if(!n)n=x;n=String(n||"").trim();if(n&&names.indexOf(n)<0){names.push(n);if(pid)pids[n]=pid;}});
+ if(names.length)h+='<section class="lvx-src lvx-ppl"><h3>People in this entry</h3><ul>'+names.map(function(n){return '<li>'+(pids[n]?'<a href="/Persons/#p-'+esc(pids[n])+'" data-lvgo="1">'+esc(dash(n))+'</a>':esc(dash(n)))+'</li>';}).join("")+'</ul></section>';
  var docs=[],seen={};(e.linked_documents||[]).forEach(function(x){if(seen[x])return;seen[x]=1;var d=null;for(var i=0;i<D.length;i++){if(D[i].id===x){d=D[i];break;}}
   if(d){if(d.hidden||!d.title)return;var u=String(d.file_url||"").trim();docs.push(u?'<a href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(dash(d.title))+'</a>':esc(dash(d.title)));}});
  if(docs.length)h+='<section class="lvx-src lvx-docs"><h3>Documents</h3><ul>'+docs.map(function(d){return '<li>'+d+'</li>';}).join("")+'</ul></section>';
@@ -274,10 +278,11 @@ window.__lvTlTop=function(el){if(!el)return;ensureCss();root=el;st={g:"all",l:""
  var dinp=el.querySelector(".lvx-dq"),dtm;dinp.addEventListener("input",function(){clearTimeout(dtm);dtm=setTimeout(function(){dq=dinp.value.trim();renderDesk();},150);});
  var inp=el.querySelector(".lvx-phone .lvx-ctl input"),tm;inp.addEventListener("input",function(){clearTimeout(tm);tm=setTimeout(function(){st.q=inp.value.trim();renderList();},150);});
  if(ov){pushed=false;teardown();}
- var m=location.hash.match(/^#ev-(.+)$/);if(m&&byId(m[1])){pushed=false;openEv(m[1],"none");}};
+ var m=location.hash.match(/^#ev-(.+)$/);if(m&&byId(m[1])){pushed=false;openEv(m[1],"none");}
+ if(location.hash==="#glossary"){var gl=el.querySelector("#glossary");if(gl){gl.open=true;setTimeout(function(){var nav=document.querySelector("main > nav");window.scrollTo({top:window.scrollY+gl.getBoundingClientRect().top-(nav?nav.offsetHeight:0)-10});},60);}}};
 addEventListener("resize",setTop);
 /* site-wide: page titles, menu Escape, links that wrap a button, Key Figures popup and the Back button */
-var TITLES={"":"Home","dashboard":"Home","thestory":"The Story","thecase":"The Case","fraudtimeline":"Evidence Timeline","moneytrail":"Financial Record","persons":"Key Figures"};
+var TITLES={"":"Home","dashboard":"Home","thestory":"The Story","thecase":"The Case","fraudtimeline":"Evidence Timeline","moneytrail":"Financial Record","persons":"Key Figures","search":"Search"};
 function seg(){return location.pathname.replace(/^\/+/,"").split("/")[0].toLowerCase();}
 function setTitle(){var t=TITLES[seg()],w=t?t+" | Certificate 1656":"LexiVault";if(document.title!==w)document.title=w;}
 var popOpen=false,quiet=false,byPop=false;

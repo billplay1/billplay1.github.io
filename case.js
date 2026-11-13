@@ -95,9 +95,14 @@ var CSS='.lvc{max-width:880px;margin:0 auto;padding:28px 16px 60px;font-family:L
 '.lvc .src a{color:#704214}'+
 '.lvc .rel{margin-top:12px}'+
 '.lvc .rel button{font:600 13.5px Lora,serif;background:#3e2723;color:#D4AF37;border:0;border-radius:999px;padding:8px 14px;margin:0 8px 8px 0;cursor:pointer;min-height:40px}'+
+'.lvc .lvc-tl a{display:inline-flex;align-items:center;font:600 14px Lora,serif;background:#fdf8ef;color:#704214;border:1px solid #D4AF37;border-radius:10px;padding:8px 12px;margin:0 8px 8px 0;min-height:40px;text-decoration:none;line-height:1.3}'+'.lvc .lvc-tl a b{color:#8b4513;margin-right:6px;white-space:nowrap}'+'.lvc .lvc-tl a:hover{background:#f5e6c4}'+
 '.lvc .close{font:600 14px Lora,serif;background:none;border:1px solid #704214;color:#704214;border-radius:999px;padding:7px 14px;cursor:pointer;margin-top:4px;min-height:40px}'+
 '.lvc .hl{animation:lvhl 1.2s ease}@keyframes lvhl{0%{background:#fff3c4}100%{background:transparent}}'+
 '@media(max-width:560px){.lvc h1{font-size:36px}.lvc .item{grid-template-columns:48px 1fr;gap:0 10px}.lvc .yr{width:48px;height:48px;font-size:14px}.lvc .item:before{left:23px;top:48px}.lvc .t{font-size:19px}}';
+var TL={answer:[/Formal Demand to Union Pacific/i,/Union Pacific.s Written Answer/i],first:[/Thorne I Filed/i,/Experts for Both Sides/i,/Produces Its File of Answers/i,/Thorne I Decided on Laches/i],appeal:[/Fifth Circuit Affirms/i],supreme:[/Supreme Court Denies Review/i],second:[/Thorne II Filed/i,/Thorne II Moves to Austin/i,/Document 60 Filed/i,/Final Judgment in Thorne II/i],texas:[/Fraud Claim Filed in Harris County/i,/Harris County Dismisses/i],nebraska:[/Fraud Complaint Brought in Nebraska/i]};
+function tlEvents(id){var T=((window.__LV&&window.__LV.TimelineEvent)||[]).filter(function(e){return !e.hidden;}),out=[];(TL[id]||[]).forEach(function(rx){for(var i=0;i<T.length;i++){if(rx.test(T[i].title||"")){if(out.indexOf(T[i])<0)out.push(T[i]);break;}}});return out.sort(function(a,b){return a.year-b.year;});}
+function escH(x){return String(x==null?"":x).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+window.__LVCASE={sources:S,cards:C,timeline:tlEvents};
 function nameOf(id){for(var i=0;i<C.length;i++)if(C[i].id===id)return C[i].title;return id;}
 window.__lvCase=function(el){
  if(!el)return;
@@ -108,6 +113,7 @@ window.__lvCase=function(el){
   h+='<div class="item" id="case-'+c.id+'"><div class="yr">'+c.yr+'</div><div class="card"><button class="head" data-id="'+c.id+'" aria-expanded="false"><div class="t">'+c.title+'</div><div class="c">'+c.court+'</div><span class="o">'+c.out+'</span></button><div class="body"><p class="lead">'+c.lead+'</p><ul class="p">';
   c.pts.forEach(function(p){h+='<li>'+p[0]+'<sup>'+p[1].map(function(k){var n=order.indexOf(k)+1;return '<a href="#" data-src="'+c.id+'-'+n+'">'+n+'</a>';}).join(",")+'</sup></li>';});
   h+='</ul><div class="src"><h4>Sources</h4><ol>'+order.map(function(k,i){var s=S[k];return '<li id="src-'+c.id+'-'+(i+1)+'">'+(s[1]?'<a href="'+s[1]+'" target="_blank" rel="noopener">'+s[0]+'</a>':s[0])+'</li>';}).join("")+'</ol></div>';
+  var tle=tlEvents(c.id);if(tle.length)h+='<div class="rel lvc-tl"><h4>On the Evidence Timeline</h4>'+tle.map(function(e){var d=window.__lvTlFmt?window.__lvTlFmt(e):String(Math.floor(e.year));return '<a href="/FraudTimeline/#ev-'+escH(e.id)+'" data-lvgo="1"><b>'+escH(d)+'</b>'+escH(window.__lvTlDash?window.__lvTlDash(e.title):e.title)+'</a>';}).join("")+'</div>';
   h+='<div class="rel"><h4>Related</h4>'+c.rel.map(function(r){return '<button data-go="'+r+'">'+nameOf(r)+'</button>';}).join("")+'</div><button class="close" data-close="'+c.id+'">Close</button></div></div></div>';
  });
  h+='</div></div>';
