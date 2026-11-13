@@ -110,6 +110,7 @@ window.__lvCase=function(el){
  el.innerHTML=h;
  function open(id,scroll){el.querySelectorAll(".item").forEach(function(it){var on=it.id==="case-"+id;it.classList.toggle("open",on);it.querySelector(".head").setAttribute("aria-expanded",on?"true":"false");});
   if(scroll){var t=el.querySelector("#case-"+id);if(t)setTimeout(function(){t.scrollIntoView({behavior:"smooth",block:"start"});},20);}}
+ if(location.hash.indexOf("#case-")===0)open(location.hash.slice(6),true);
  el.addEventListener("click",function(e){
   var hd=e.target.closest(".head");if(hd){var it=hd.parentNode.parentNode;if(it.classList.contains("open")){it.classList.remove("open");}else open(hd.getAttribute("data-id"),true);return;}
   var go=e.target.closest("[data-go]");if(go){open(go.getAttribute("data-go"),true);return;}
