@@ -13,6 +13,7 @@ var S={
  EXP:["Reports of Maury Klein (Dkt. 76-1) and Stephen J. Lubben (Dkt. 76-3), and their depositions, No. 1:15-CV-561-RP"],
  CA5:["Thorne v. Union Pacific Corp., No. 18-50019 (5th Cir. Nov. 20, 2018)","https://www.ca5.uscourts.gov/Opinions/unpub/18/18-50019.0.pdf"],
  SCT:["Supreme Court of the United States, No. 18-1169, certiorari denied Apr. 15, 2019"],
+ CERT:["Certificate No. 1656, Southern Pacific Railroad Company, June 10, 1859, front and back"],
  T2:["Thorne v. Union Pacific Corp., No. 1:21-CV-311-RP (W.D. Tex.): Dkt. 56; Doc. 60 (Sept. 6, 2022); final judgment (Sept. 29, 2022)"]
 };
 var C=[
@@ -25,11 +26,14 @@ var C=[
  ["Union Pacific's own file lists $1,250,000 of Southern Pacific stock still outstanding on March 21, 1872, with Thomas A. Scott holding $625,600 of it.",["EXD","NC"]]
  ],rel:["first","nebraska"]},
 {id:"first",yr:"2015",title:"The First Lawsuit",court:"U.S. District Court, W.D. Texas · No. 1:15-CV-561-RP",out:"Decided on laches",
- lead:"A suit asking the court to declare the number, class and value of the shares the certificate represents.",
+ lead:"A suit on the certificate itself: the number, class and value of its 300 shares, and the interest promised on its back.",
  pts:[
+ ["The back of the certificate carries a printed promise of interest <q>at the rate of seven per cent per annum</q>, payable <q>in money or five per cent stock</q> to the holder, and a handwritten line signed by the company secretary: <q>Interest suspended until one hundred miles of road are in operation.</q>",["CERT"]],
+ ["The suit asked the court to declare the shares' value and <q>the cumulative dollar amounts of the dividends and interest earned</q> on them. A motion in the case concerned <q>the import of text found on the back of the Certificate.</q>",["D118"]],
  ["Union Pacific's historian expert said the shares ended with the 1868 sale. His report never mentions the construction company. Its law expert testified he had <q>not really relied upon any of that transaction with the construction company.</q>",["EXP","NC"]],
  ["At the hearing of November 17, 2017, the judge asked twice about the Southern Pacific stock reported in 1873. Union Pacific answered first with the 1872 sale and then with the 1868 sales.",["D123","NC"]],
- ["The court ruled on laches alone, found it <q>unnecessary to consider the other arguments,</q> and held it could not conclude the claims were time-barred.",["D118","NC"]]
+ ["The court ruled on laches alone, found it <q>unnecessary to consider the other arguments,</q> and held it could not conclude the claims were time-barred. No court has decided what the shares or the promise on the back are worth.",["D118","NC"]],
+ ["Thorne's position: the first suit was confined to what the 2011 answer left in view, the shares and the promise on the back. The lands named on the front, <q>all the rights, interests, privileges, lands, and other property of the Company,</q> were never put before the court.",["CERT","NC"]]
  ],rel:["answer","appeal"]},
 {id:"appeal",yr:"2018",title:"The Appeal",court:"U.S. Court of Appeals, Fifth Circuit · No. 18-50019",out:"Affirmed on laches",
  lead:"The Fifth Circuit reviewed the laches ruling.",
@@ -41,7 +45,7 @@ var C=[
  lead:"A petition asking the Supreme Court to hear the first lawsuit.",
  pts:[["Certiorari was denied on April 15, 2019, ending the first lawsuit.",["SCT","NC"]]],rel:["appeal","second"]},
 {id:"second",yr:"2020",title:"The Second Lawsuit",court:"U.S. District Court, W.D. Texas · No. 1:21-CV-311-RP",out:"Judgment on counterclaim",
- lead:"A claim to ten of twenty Texas and Pacific shares recorded in the name of L. S. Thorne. It did not concern Certificate No. 1656.",
+ lead:"A different instrument on a different company's books: ten of twenty Texas and Pacific shares recorded on the Texas and Pacific's own books in the name of L. S. Thorne. It was not a suit on Certificate No. 1656.",
  pts:[
  ["Union Pacific brought a counterclaim over Southern Pacific stock certificates.",["T2","NC"]],
  ["On September 6, 2022, the plaintiff first alleged <q>a trail of deceit and conversion</q> reaching <q>far deeper than Hall's 1868 foreclosure sales,</q> naming directors of the construction company.",["T2","NC"]],
@@ -65,7 +69,7 @@ var C=[
 var CSS='.lvc{max-width:880px;margin:0 auto;padding:28px 16px 60px;font-family:Lora,Georgia,serif;color:#3b2a17}'+
 '.lvc h1{font-family:"Playfair Display",serif;font-weight:900;color:#704214;font-size:46px;line-height:1.05;text-align:center;margin:8px 0 10px}'+
 '.lvc .sub{text-align:center;color:#704214;font-size:18px;max-width:620px;margin:0 auto 30px}'+
-'.lvc .rail{position:relative;padding-left:0}'+
+'.lvc .rail{position:relative;padding-left:0}'+'.lvc .three{background:#3e2723;color:#f3e6c8;border:1px solid #D4AF37;border-radius:12px;padding:16px 18px;margin:0 auto 28px;max-width:720px;font-size:16px;line-height:1.55}'+'.lvc .three-h{font-family:"Playfair Display",serif;color:#D4AF37;font-weight:700;font-size:19px;margin-bottom:8px}'+'.lvc .three p{margin:6px 0}'+'.lvc .three b{color:#D4AF37}'+
 '.lvc .item{scroll-margin-top:80px;position:relative;display:grid;grid-template-columns:64px 1fr;gap:0 14px;margin-bottom:14px}'+
 '.lvc .item:before{content:"";position:absolute;left:31px;top:64px;bottom:-14px;width:2px;background:linear-gradient(#D4AF37,#b89a5a)}'+
 '.lvc .item:last-child:before{display:none}'+
@@ -97,7 +101,7 @@ var CSS='.lvc{max-width:880px;margin:0 auto;padding:28px 16px 60px;font-family:L
 function nameOf(id){for(var i=0;i<C.length;i++)if(C[i].id===id)return C[i].title;return id;}
 window.__lvCase=function(el){
  if(!el)return;
- var h='<style>'+CSS+'</style><div class="lvc"><h1>The Case</h1><p class="sub">Every court filing on Certificate No. 1656, in order, with the record behind each statement.</p><div class="rail">';
+ var h='<style>'+CSS+'</style><div class="lvc"><h1>The Case</h1><p class="sub">Every court filing on Certificate No. 1656, in order, with the record behind each statement.</p><div class="three"><div class="three-h">Three suits, three different questions</div><p><b>2015, the certificate itself.</b> The value of its 300 shares and the interest promised on its back. Decided on delay alone; the merits were never reached.</p><p><b>2020, another company\'s books.</b> Ten of twenty Texas and Pacific shares recorded in L. S. Thorne\'s name. Not Certificate No. 1656.</p><p><b>2026, the 2011 answer.</b> Whether Union Pacific\'s written answer about the certificate was materially misleading.</p></div><div class="rail">';
  C.forEach(function(c){
   c.pts.forEach(function(p){if(p[1].length>1)p[1]=p[1].filter(function(k){return k!=="NC";});});
   var order=[];c.pts.forEach(function(p){p[1].forEach(function(k){if(order.indexOf(k)<0)order.push(k);});});
