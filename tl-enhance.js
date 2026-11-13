@@ -64,6 +64,35 @@ var CSS=
 'main:has(.lv-tl-top)>nav.sticky{background:#b9ab9c}'+
 '@media (max-width:699px){.lv-rail,.lv-tl-controls{display:none!important}}'+
 '@media (min-width:700px){.lvx-phone{display:none!important}}'+
+'@media (max-width:699px){.lvx-desk{display:none!important}}'+
+/* desktop search and era chips */
+'.lvx-desk{background:linear-gradient(135deg,#3e2723 0%,#2c1810 50%,#1a0f0a 100%);border:2px solid #D4AF37;border-radius:12px;padding:14px 16px 12px;color:#f5ead8;margin:0 0 16px}'+
+'.lvx-desk .lvx-ctl input{max-width:560px;display:block;margin:0 auto}'+
+'.lvx-deras{flex-wrap:wrap;overflow:visible;justify-content:center}'+
+'.lvx-dres .lvx-count{text-align:center}'+
+'.lvx-dlist{max-height:60vh;overflow-y:auto;margin:10px 0 0;padding:0 4px 0 0}'+
+'.lvx-dlist .lvx-card .tt{font-size:16px}'+
+'.ftm-lb-close{min-width:44px;min-height:44px;display:inline-flex!important;align-items:center;justify-content:center}'+
+'.lvx-pop .lvx-xbtn{min-width:40px!important;min-height:40px!important;display:inline-flex!important;align-items:center;justify-content:center}'+
+/* phone: readable text and comfortable tap targets on every page */
+'@media (max-width:699px){'+
+ 'main>nav.sticky a{display:inline-flex;align-items:center;min-height:40px;padding:0 6px}'+
+ 'footer a{display:inline-flex!important;align-items:center;min-height:40px}footer .justify-between{flex-wrap:wrap;row-gap:4px}footer .justify-between>:not(:first-child):not(:last-child){order:-1;flex:1 0 100%;text-align:center}'+
+ 'main .text-xs:not(nav){font-size:13px!important}footer .text-xs,main p.text-xs.italic{font-size:14px!important}'+
+ 'main a.text-sm,main a.py-1{display:inline-flex;align-items:center;min-height:40px}'+
+ '.lvx-card .lay,.lvx-lbl{font-size:13px!important}'+
+ '.ftm a[href="/TheCase"]{font-size:13px!important;display:inline-flex!important;align-items:center;min-height:40px}'+
+ '.ftm-eyebrow,.ftm-cert-label,.ftm-cell-label,.ftm-part-number,.ftm-flow-label,.ftm-mhead-right,.ftm-t,.ftm-void-badge,.ftm div[style*="font-size: 10px"],.ftm div[style*="font-size: 9"]{font-size:12.5px!important}'+
+ '.ftm-ledger thead th{font-size:12px!important;padding-left:5px!important;padding-right:5px!important}.ftm-ledger tbody td{padding-left:5px!important;padding-right:5px!important}.ftm-ledger tbody td.yr{width:auto!important}'+
+ '.ftm-cert-caption,.ftm-share-note,.ftm-part-period,.ftm-part-intro,.ftm-ledger tbody td,.ftm-ledger tbody td.num,.ftm-ledger tbody tr.subtotal td.lbl,.ftm-ledger tbody td .mech,.ftm-ledger tbody td .src,.ftm-ledger tbody td .period-inline{font-size:14px!important}'+
+ '.ftm a.src{display:flex!important;align-items:center;min-height:40px}'+
+ 
+ '.ftm-lb{display:flex!important;align-items:flex-start!important;justify-content:flex-start!important;overflow:auto!important;padding:0!important;-webkit-overflow-scrolling:touch}'+
+ '.ftm-lb img{flex:none;width:200%!important;max-width:none!important;max-height:none!important;height:auto!important;margin:auto 0!important}'+
+ '.lvx-pop div[style*="text-transform: uppercase"]{font-size:13px!important}'+
+ '.lvx-pop div[style*="font-size: 13px"]{font-size:14px!important}'+
+ '.lvx-pop button[style*="border-radius: 999px"]{font-size:14px!important;padding:8px 12px!important;min-height:40px;transition:none!important}'+
+'}'+
 /* phone list */
 '.lvx-phone{background:linear-gradient(135deg,#3e2723 0%,#2c1810 50%,#1a0f0a 100%);border:3px solid #D4AF37;border-radius:12px;padding:12px 10px 16px;color:#f5ead8}'+
 '.lvx-ctl input{width:100%;box-sizing:border-box;font-size:17px;padding:12px 14px;border-radius:10px;border:1.5px solid #D4AF37;background:#1a0f0a;color:#f5ead8;font-family:Lora,Georgia,serif}'+
@@ -135,11 +164,16 @@ function topHtml(){
   '<div class="lvx-count" aria-live="polite"></div></div>'+
   '<div class="lvx-eras"><div class="lvx-row">'+ERAS.map(function(e,i){return '<button type="button" class="lvx-chip" data-era="'+i+'">'+esc(e[2])+': '+esc(e[3])+'</button>';}).join("")+'</div></div>'+
   '<div class="lvx-list"></div></div>';
+ h+='<div class="lvx-desk"><div class="lvx-ctl"><input type="search" class="lvx-dq" placeholder="Search the timeline" aria-label="Search the timeline"></div>'+
+  '<div class="lvx-row lvx-deras">'+ERAS.map(function(e,i){return '<button type="button" class="lvx-chip" data-dera="'+i+'">'+esc(e[2])+': '+esc(e[3])+'</button>';}).join("")+'</div>'+
+  '<div class="lvx-dres" hidden><div class="lvx-count" aria-live="polite"></div><div class="lvx-dlist"></div></div></div>';
  return h;}
 
 var root=null,st={g:"all",l:"",q:""},ctxIds=[];
+function norm(x){return String(x==null?"":x).toLowerCase().replace(/pittman/g,"pitman");}
+function qHit(e,q){return norm((e.title||"")+" "+(e.description||"")+" "+(e.significance||"")+" "+(e.legal_basis||"")+" "+fmtE(e)).indexOf(norm(q))>-1;}
 function matchP(e){if(!group(e,st.g))return false;if(st.l&&layer(e)!==st.l)return false;
- if(st.q){var q=st.q.toLowerCase();if(((e.title||"")+" "+(e.description||"")+" "+(e.significance||"")+" "+(e.legal_basis||"")+" "+fmtE(e)).toLowerCase().indexOf(q)<0)return false;}return true;}
+ if(st.q&&!qHit(e,st.q))return false;return true;}
 function renderList(){if(!root)return;var E=events(),list=root.querySelector(".lvx-list"),h="",last=-1,n=0;ctxIds=[];
  E.forEach(function(e){if(!matchP(e))return;n++;ctxIds.push(e.id);var er=eraOf(e.year);
   if(er!==last){h+='<h3 class="lvx-era" id="lvx-era-'+er+'">'+esc(ERAS[er][3])+'<small>'+esc(ERAS[er][2])+'</small></h3>';last=er;}
@@ -148,22 +182,54 @@ function renderList(){if(!root)return;var E=events(),list=root.querySelector(".l
  list.innerHTML=h||'<div class="lvx-empty">No events match. Try another word or tap All.</div>';
  root.querySelector(".lvx-count").textContent="Showing "+n+" of "+E.length+" events";
  root.querySelectorAll("[data-era]").forEach(function(b){b.style.display=list.querySelector("#lvx-era-"+b.getAttribute("data-era"))?"":"none";});}
+/* desktop: search results follow the filters chosen above the rail */
+var dq="",dIds=[];
+function deskSel(){var c=document.querySelector(".lv-tl-controls"),g="all",l="",ct=false;if(!c)return {g:g,l:l,ct:ct};
+ c.querySelectorAll('button[aria-pressed="true"]').forEach(function(b){var t=(b.textContent||"").trim();
+  GROUPS.forEach(function(x){if(x[1]===t)g=x[0];});LAYERS.forEach(function(x){if(x[1]===t)l=x[0];});if(/C&TRCC/.test(t))ct=true;});return {g:g,l:l,ct:ct};}
+function isCt(e){var t=tags(e),ti=(e.title||"").toLowerCase(),de=(e.description||"").toLowerCase();
+ return t.indexOf("c&trcc")>-1||t.indexOf("ctrcc")>-1||ti.indexOf("c&trcc")>-1||ti.indexOf("california and texas railway construction")>-1||de.indexOf("c&trcc")>-1||de.indexOf("california and texas railway construction")>-1;}
+function renderDesk(){if(!root)return;var box=root.querySelector(".lvx-dres");if(!box)return;dIds=[];
+ if(!dq){box.hidden=true;return;}
+ var f=deskSel(),E=events(),h="",n=0;
+ E.forEach(function(e){if(f.g!=="all"&&!group(e,f.g))return;if(f.ct){if(!isCt(e))return;}else if(f.l&&layer(e)!==f.l)return;if(!qHit(e,dq))return;
+  n++;dIds.push(e.id);var L=LMAP[layer(e)];
+  h+='<button type="button" class="lvx-card" data-ev="'+esc(e.id)+'" style="border-left-color:'+L[2]+'"><div class="top"><span class="lay" style="color:'+L[2]+'">'+esc(L[1])+'</span><span class="dt">'+esc(fmtE(e))+'</span></div><div class="tt">'+esc(dash(e.title))+'</div></button>';});
+ box.querySelector(".lvx-dlist").innerHTML=h||'<div class="lvx-empty">No events match. Try another word or tap All.</div>';
+ box.querySelector(".lvx-count").textContent="Showing "+n+" of "+E.length+" events";box.hidden=false;}
+function railJump(i,btn){var sc=document.querySelector(".lv-rail .timeline-scroll-container");if(!sc)return;
+ var cards=[].slice.call(sc.querySelectorAll("button.group")),tgt=null;
+ for(var k=0;k<cards.length;k++){var d=cards[k].querySelector(".text-xs"),m=d&&(d.textContent||"").match(/\d{4}/);if(m&&eraOf(+m[0])>=i){tgt=cards[k];break;}}
+ if(!tgt&&cards.length)tgt=cards[cards.length-1];if(!tgt)return;
+ var r=tgt.getBoundingClientRect(),sr=sc.getBoundingClientRect();sc.scrollTo({left:Math.max(0,sc.scrollLeft+r.left-sr.left-24),behavior:"smooth"});
+ if(root)root.querySelectorAll("[data-dera]").forEach(function(b){b.classList.toggle("on",b===btn);});
+ var rail=document.querySelector(".lv-rail");if(rail){var rr=rail.getBoundingClientRect(),nav=document.querySelector("main > nav"),top=nav?nav.offsetHeight:0;
+  if(rr.top<top||rr.bottom>innerHeight)window.scrollTo({top:window.scrollY+rr.top-top-12,behavior:"smooth"});}}
+document.addEventListener("click",function(ev){if(dq&&ev.target.closest&&ev.target.closest(".lv-tl-controls button"))setTimeout(renderDesk,30);},true);
 function setTop(){if(!root)return;var nav=document.querySelector("main > nav");root.style.setProperty("--lvx-top",(nav?nav.offsetHeight:0)+"px");}
 
 /* detail view */
 var ov=null,savedY=0,pushed=false,curId=null;
 function srcHtml(s){s=dash(s||"").trim();if(!s)return "";var parts=s.split(/;\s+(?![^()]*\))/).map(function(x){return x.trim();}).filter(Boolean);
  return '<ul>'+parts.map(function(p){var out="",i=0,re=/https?:\/\/[^\s<>"]+[^\s<>".,;:)\]]/g,m;while((m=re.exec(p))){out+=esc(p.slice(i,m.index))+'<a href="'+esc(m[0])+'" target="_blank" rel="noopener">'+esc(m[0])+'</a>';i=m.index+m[0].length;}out+=esc(p.slice(i));return '<li>'+out+'</li>';}).join("")+'</ul>';}
-function list4nav(){return (phone()&&ctxIds.length)?ctxIds:events().map(function(e){return e.id;});}
+function list4nav(){if(phone()&&ctxIds.length)return ctxIds;if(!phone()&&dq&&dIds.length)return dIds;return events().map(function(e){return e.id;});}
+function relHtml(e){var LV=window.__LV||{},P=LV.Person||[],D=LV.Document||[],h="";
+ var names=[];(e.persons||[]).forEach(function(x){var n=null;for(var i=0;i<P.length;i++){if(P[i].id===x){n=P[i].name;break;}}if(!n)n=x;n=String(n||"").trim();if(n&&names.indexOf(n)<0)names.push(n);});
+ if(names.length)h+='<section class="lvx-src lvx-ppl"><h3>People in this entry</h3><ul>'+names.map(function(n){return '<li>'+esc(dash(n))+'</li>';}).join("")+'</ul></section>';
+ var docs=[],seen={};(e.linked_documents||[]).forEach(function(x){if(seen[x])return;seen[x]=1;var d=null;for(var i=0;i<D.length;i++){if(D[i].id===x){d=D[i];break;}}
+  if(d){if(d.hidden||!d.title)return;var u=String(d.file_url||"").trim();docs.push(u?'<a href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(dash(d.title))+'</a>':esc(dash(d.title)));}});
+ if(docs.length)h+='<section class="lvx-src lvx-docs"><h3>Documents</h3><ul>'+docs.map(function(d){return '<li>'+d+'</li>';}).join("")+'</ul></section>';
+ return h;}
 function draw(id){var e=byId(id);if(!e)return false;curId=id;var L=LMAP[layer(e)],ids=list4nav(),ix=ids.indexOf(id);
  var pos=String(e.significance||"").replace(/^\s*Thorne[’']s position:\s*/i,"").trim();
- var url=location.origin+"/FraudTimeline#ev-"+id;
+ var url=location.origin+"/FraudTimeline/#ev-"+id;
  var h='<div class="lvx-dv" role="dialog" aria-modal="true" aria-labelledby="lvx-h" style="border-left-color:'+L[2]+'">'+
   '<div class="lvx-bar"><button type="button" class="lvx-btn" data-nav="-1" aria-label="Earlier event"'+(ix>0?'':' disabled')+'>&larr; Earlier</button><span class="sp">'+(ix>-1?(ix+1)+' of '+ids.length:'')+'</span><button type="button" class="lvx-btn" data-nav="1" aria-label="Later event"'+(ix>-1&&ix<ids.length-1?'':' disabled')+'>Later &rarr;</button><button type="button" class="lvx-btn lvx-x" aria-label="Close">Close</button></div>'+
   '<div class="lvx-body"><span class="lvx-pill" style="color:'+L[2]+';border:1px solid '+L[2]+'"><i class="lv-sw" style="background:'+L[2]+'"></i>'+esc(L[1])+'</span>'+
   '<div class="lvx-date">'+esc(fmtE(e))+'</div><h2 id="lvx-h">'+esc(dash(e.title))+'</h2>'+
   (e.description&&String(e.description).trim()?'<div class="lvx-desc">'+esc(dash(e.description))+'</div>':'')+
   (pos?'<section class="lvx-pos"><h3>Thorne\'s position</h3><div>'+esc(dash(pos))+'</div></section>':'')+
+  relHtml(e)+
   (e.legal_basis&&String(e.legal_basis).trim()?'<section class="lvx-src"><h3>Sources</h3>'+srcHtml(e.legal_basis)+'</section>':'')+
   '<div class="lvx-share">Link to this event: <a href="'+esc(url)+'">'+esc(url.replace(/^https?:\/\//,""))+'</a><button type="button" class="lvx-btn lvx-copy">Copy link</button></div>'+
   '</div></div>';
@@ -184,10 +250,10 @@ function nav(d){var ids=list4nav(),ix=ids.indexOf(curId),n=ids[ix+d];if(n){windo
 function onOv(ev){if(ev.target===ov){closeEv();return;}var t=ev.target;
  if(t.closest(".lvx-x")){closeEv();return;}
  var nb=t.closest("[data-nav]");if(nb&&!nb.disabled){nav(+nb.getAttribute("data-nav"));return;}
- if(t.closest(".lvx-copy")){var u=location.origin+"/FraudTimeline#ev-"+curId,btn=t.closest(".lvx-copy");
+ if(t.closest(".lvx-copy")){var u=location.origin+"/FraudTimeline/#ev-"+curId,btn=t.closest(".lvx-copy");
   var ok=function(){btn.textContent="Copied";setTimeout(function(){btn.textContent="Copy link";},1500);};
   if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(u).then(ok,function(){window.prompt("Copy this link",u);});else window.prompt("Copy this link",u);return;}
- var a=t.closest("a[href^='/FraudTimeline#ev-']");if(a){ev.preventDefault();}}
+ var a=t.closest("a[href^='/FraudTimeline#ev-'],a[href^='/FraudTimeline/#ev-']");if(a){ev.preventDefault();}}
 window.__lvTlOpen=function(id){window.__lvLastEv=id;openEv(id,"push");};
 addEventListener("popstate",function(){
  if(!isTl()){pushed=false;teardown();return;}
@@ -195,17 +261,43 @@ addEventListener("popstate",function(){
  if(m&&byId(m[1])){if(curId!==m[1])openEv(m[1],"none");}else{pushed=false;teardown();}});
 addEventListener("hashchange",function(){if(!isTl())return;var m=location.hash.match(/^#ev-(.+)$/);if(m&&byId(m[1])&&curId!==m[1])openEv(m[1],"none");});
 
-window.__lvTlTop=function(el){if(!el)return;ensureCss();root=el;st={g:"all",l:"",q:""};el.innerHTML=topHtml();
+window.__lvTlTop=function(el){if(!el)return;ensureCss();root=el;st={g:"all",l:"",q:""};dq="";dIds=[];el.innerHTML=topHtml();
  try{localStorage.setItem("lvTlStartSeen","1");}catch(e){}
  renderList();setTop();setTimeout(setTop,300);
  el.addEventListener("click",function(ev){var t=ev.target;
   var go=t.closest("[data-lvx-go]");if(go){ev.preventDefault();history.pushState({},"",go.getAttribute("data-lvx-go"));dispatchEvent(new PopStateEvent("popstate"));scrollTo(0,0);return;}
   var g=t.closest("[data-g]");if(g){st.g=g.getAttribute("data-g");el.querySelectorAll("[data-g]").forEach(function(b){b.classList.toggle("on",b===g);});renderList();return;}
   var l=t.closest("[data-l]");if(l){st.l=l.getAttribute("data-l");el.querySelectorAll("[data-l]").forEach(function(b){b.classList.toggle("on",b===l);});renderList();return;}
+  var de=t.closest("[data-dera]");if(de){railJump(+de.getAttribute("data-dera"),de);return;}
   var er=t.closest("[data-era]");if(er){var h=el.querySelector("#lvx-era-"+er.getAttribute("data-era"));if(h)h.scrollIntoView({behavior:"smooth",block:"start"});el.querySelectorAll("[data-era]").forEach(function(b){b.classList.toggle("on",b===er);});return;}
   var c=t.closest("[data-ev]");if(c){window.__lvTlOpen(c.getAttribute("data-ev"));}});
- var inp=el.querySelector(".lvx-ctl input"),tm;inp.addEventListener("input",function(){clearTimeout(tm);tm=setTimeout(function(){st.q=inp.value.trim();renderList();},150);});
+ var dinp=el.querySelector(".lvx-dq"),dtm;dinp.addEventListener("input",function(){clearTimeout(dtm);dtm=setTimeout(function(){dq=dinp.value.trim();renderDesk();},150);});
+ var inp=el.querySelector(".lvx-phone .lvx-ctl input"),tm;inp.addEventListener("input",function(){clearTimeout(tm);tm=setTimeout(function(){st.q=inp.value.trim();renderList();},150);});
  if(ov){pushed=false;teardown();}
  var m=location.hash.match(/^#ev-(.+)$/);if(m&&byId(m[1])){pushed=false;openEv(m[1],"none");}};
 addEventListener("resize",setTop);
+/* site-wide: page titles, menu Escape, links that wrap a button, Key Figures popup and the Back button */
+var TITLES={"":"Home","dashboard":"Home","thestory":"The Story","thecase":"The Case","fraudtimeline":"Evidence Timeline","moneytrail":"Financial Record","persons":"Key Figures"};
+function seg(){return location.pathname.replace(/^\/+/,"").split("/")[0].toLowerCase();}
+function setTitle(){var t=TITLES[seg()],w=t?t+" | Certificate 1656":"LexiVault";if(document.title!==w)document.title=w;}
+var popOpen=false,quiet=false,byPop=false;
+function curPop(){if(seg()!=="persons")return null;var c=document.querySelectorAll('div[style*="z-index: 9999"]');for(var i=0;i<c.length;i++)if(c[i].querySelector("button"))return c[i];return null;}
+function markPop(p){if(!p)return;p.classList.add("lvx-pop");var bs=p.querySelectorAll("button");for(var i=0;i<bs.length;i++){if((bs[i].textContent||"").trim()==="✕"){if(!bs[i].classList.contains("lvx-xbtn")){bs[i].classList.add("lvx-xbtn");bs[i].setAttribute("aria-label","Close");}break;}}}
+function checkPop(){var p=curPop();markPop(p);
+ if(p&&!popOpen){popOpen=true;if(!(history.state&&history.state.lvPerson))history.pushState(Object.assign({},history.state||{},{lvPerson:1}),"");}
+ else if(!p&&popOpen){popOpen=false;if(byPop){byPop=false;return;}if(seg()==="persons"&&history.state&&history.state.lvPerson){quiet=true;history.back();}}}
+addEventListener("popstate",function(){if(quiet){quiet=false;return;}
+ if(popOpen&&!(history.state&&history.state.lvPerson)){var p=curPop(),x=p&&p.querySelector(".lvx-xbtn");if(x){byPop=true;x.click();}}});
+function fixUp(){setTitle();
+ var nb=document.querySelectorAll("a button");for(var i=0;i<nb.length;i++){var b=nb[i];if(b.getAttribute("data-lvx-nb"))continue;var a=b.closest("a");b.setAttribute("data-lvx-nb","1");b.setAttribute("tabindex","-1");b.setAttribute("aria-hidden","true");
+  if(a&&!a.hasAttribute("aria-label"))a.setAttribute("aria-label",(b.textContent||"").replace(/\s+/g," ").trim());}
+ var eb=document.querySelector(".ftm-eyebrow");if(eb&&!eb.hasAttribute("role")){eb.setAttribute("role","heading");eb.setAttribute("aria-level","1");}
+ checkPop();}
+var fxT=null;function soon(){if(fxT)return;fxT=setTimeout(function(){fxT=null;fixUp();},40);}
+["pushState","replaceState"].forEach(function(k){var o=history[k];history[k]=function(){var r=o.apply(this,arguments);soon();return r;};});
+addEventListener("popstate",soon);
+document.addEventListener("keydown",function(ev){if(ev.key!=="Escape")return;var b=document.querySelector('button[aria-label="Menu"]');
+ if(b&&b.getAttribute("aria-expanded")==="true"){b.click();b.focus();}});
+function startObs(){setTitle();if(!document.body){return;}new MutationObserver(function(){markPop(curPop());soon();}).observe(document.body,{childList:true,subtree:true});soon();}
+if(document.body)startObs();else document.addEventListener("DOMContentLoaded",startObs);
 })();
