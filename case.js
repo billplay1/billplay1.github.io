@@ -21,8 +21,8 @@ var C=[
  lead:"An attorney asked Union Pacific about Certificate No. 1656. The answer it gave that day is what the fraud claim is about.",
  pts:[
  ["Union Pacific's Senior General Attorney told the attorney by telephone that an 1868 bankruptcy in Harrison County discharged the holder's rights, and that he had <q>a file of about 25 certificates just like yours.</q>",["EXA","NC"]],
- ["His written answer that evening cited <q>older correspondence in our files that dates to 1907,</q> recited sales in 1860, 1861 and 1868, and ended: <q>In 1872, Texas and Pacific acquired SPRC.</q> It pointed to Harrison County records to confirm it.",["EXB","NC"]],
- ["It left out what came next. In June 1873 the California and Texas Railway Construction Company reported $1,068,947.57 of <q>Southern Pacific Railway stock converted</q> into its capital.",["EXC","NC"]],
+ ["His written answer that evening cited <q>older correspondence in our files that dates to 1907,</q> recited sales in 1860 and 1861 and the 1868 sales to R. B. Hall's group, and ended: <q>In 1872, Texas and Pacific acquired SPRC.</q> It pointed to Harrison County records to confirm it.",["EXB","NC"]],
+ ["The answer does not mention what the record shows next. In June 1873 the California and Texas Railway Construction Company reported $1,068,947.57 of <q>Southern Pacific Railway stock converted</q> into its capital.",["EXC","NC"]],
  ["Union Pacific's own file lists $1,250,000 of Southern Pacific stock still outstanding on March 21, 1872, with Thomas A. Scott holding $625,600 of it.",["EXD","NC"]]
  ],rel:["first","nebraska"]},
 {id:"first",yr:"2015",title:"The First Lawsuit",court:"U.S. District Court, W.D. Texas · No. 1:15-CV-561-RP",out:"Decided on laches",
@@ -30,25 +30,25 @@ var C=[
  pts:[
  ["The back of the certificate carries a printed promise of interest <q>at the rate of seven per cent per annum</q>, payable <q>in money or five per cent stock</q> to the holder, and a handwritten line signed by the company secretary: <q>Interest suspended until one hundred miles of road are in operation.</q>",["CERT"]],
  ["The suit asked the court to declare the shares' value and <q>the cumulative dollar amounts of the dividends and interest earned</q> on them. A motion in the case concerned <q>the import of text found on the back of the Certificate.</q>",["D118"]],
- ["Union Pacific's historian expert said the shares ended with the 1868 sale. His report never mentions the construction company. Its law expert testified he had <q>not really relied upon any of that transaction with the construction company.</q>",["EXP","NC"]],
+ ["Union Pacific's historian expert said the shares ended with the 1868 sales. His report never mentions the construction company. Its law expert testified he had <q>not really relied upon any of that transaction with the construction company.</q>",["EXP","NC"]],
  ["At the hearing of November 17, 2017, the judge asked twice about the Southern Pacific stock reported in 1873. Union Pacific answered first with the 1872 sale and then with the 1868 sales.",["D123","NC"]],
- ["The court ruled on laches alone, found it <q>unnecessary to consider the other arguments,</q> and held it could not conclude the claims were time-barred. No court has decided what the shares or the promise on the back are worth.",["D118","NC"]],
- ["Thorne's position: the first suit was confined to what the 2011 answer left in view, the shares and the promise on the back. The lands named on the front, <q>all the rights, interests, privileges, lands, and other property of the Company,</q> were never put before the court.",["CERT","NC"]]
+ ["The court ruled on laches alone, found it <q>unnecessary to consider the other arguments,</q> and held it could not conclude the claims were time-barred. Laches is a defense that can bar a claim brought too long after the events. No court has decided what the shares or the promise on the back are worth.",["D118","NC"]],
+ ["Thorne's position: the first suit was a suit on the certificate's own terms, the shares and the interest promised on its back. No claim about the 2011 answer was pleaded or decided in it.",["NC"]]
  ],rel:["answer","appeal"]},
 {id:"appeal",yr:"2018",title:"The Appeal",court:"U.S. Court of Appeals, Fifth Circuit · No. 18-50019",out:"Affirmed on laches",
  lead:"The Fifth Circuit reviewed the laches ruling.",
  pts:[
  ["The court affirmed on laches and did not address limitations.",["CA5","NC"]],
- ["Union Pacific's brief told the court that <q>in 1872, Southern Pacific ceased to exist as a separate company</q> and skipped ahead to a merger in 1976.",["NC"]]
+ ["Union Pacific's brief told the court that <q>in 1872, Southern Pacific ceased to exist as a separate company</q> and turned next to a merger in 1976.",["NC"]]
  ],rel:["first","supreme"]},
 {id:"supreme",yr:"2019",title:"The Supreme Court",court:"Supreme Court of the United States · No. 18-1169",out:"Review denied",
  lead:"A petition asking the Supreme Court to hear the first lawsuit.",
- pts:[["Certiorari was denied on April 15, 2019, ending the first lawsuit.",["SCT","NC"]]],rel:["appeal","second"]},
-{id:"second",yr:"2020",title:"The Second Lawsuit",court:"U.S. District Court, W.D. Texas · No. 1:21-CV-311-RP",out:"Judgment on counterclaim",
+ pts:[["The Supreme Court denied certiorari, its discretionary review of the case, on April 15, 2019, ending the first lawsuit.",["SCT","NC"]]],rel:["appeal","second"]},
+{id:"second",yr:"2020",title:"The Second Lawsuit",court:"U.S. District Court, S.D. Texas, then W.D. Texas · No. 4:20-cv-03381, later No. 1:21-CV-311-RP",out:"Judgment on counterclaim",
  lead:"A different instrument on a different company's books: ten of twenty Texas and Pacific shares recorded on the Texas and Pacific's own books in the name of L. S. Thorne. It was not a suit on Certificate No. 1656.",
  pts:[
- ["Union Pacific brought a counterclaim over Southern Pacific stock certificates.",["T2","NC"]],
- ["On September 6, 2022, the plaintiff first alleged <q>a trail of deceit and conversion</q> reaching <q>far deeper than Hall's 1868 foreclosure sales,</q> naming directors of the construction company.",["T2","NC"]],
+ ["Union Pacific brought a counterclaim, a claim of its own against the plaintiff, over Southern Pacific stock certificates.",["T2","NC"]],
+ ["On September 6, 2022, the plaintiff first alleged that directors of the construction company took part in a deception reaching <q>far deeper than Hall's 1868 foreclosure sales.</q> The filing did not mention the 2011 answer.",["T2","NC"]],
  ["Judgment was entered for Union Pacific on September 29, 2022. Neither lawsuit pleaded or decided any claim about the 2011 answer.",["T2","NC"]]
  ],rel:["supreme","texas"]},
 {id:"texas",yr:"2026",title:"The Texas Fraud Claim",court:"Harris County District Court · No. 2026-63692",out:"Dismissed for jurisdiction",
@@ -57,12 +57,12 @@ var C=[
  ["Filed September 1, 2026, in Houston, where the 2011 answer was sent.",["NC"]],
  ["Dismissed October 19, 2026, for want of personal jurisdiction over Union Pacific. The court did not reach the merits.",["EXF","NC"]]
  ],rel:["answer","nebraska"]},
-{id:"nebraska",yr:"2026",title:"The Nebraska Complaint",court:"District Court of Douglas County, Nebraska",out:"Filed November 2026",
- lead:"The same fraud claim, filed where Union Pacific has its headquarters.",
+{id:"nebraska",yr:"2026",title:"The Nebraska Complaint",court:"District Court of Douglas County, Nebraska",out:"Brought November 2026",
+ lead:"The same fraud claim, in a complaint dated November 9, 2026, in the District Court of Douglas County, Nebraska, where Union Pacific has its headquarters.",
  pts:[
  ["The claim is for fraud in the August 3, 2011 answer and nothing else. It rests on what the answer left out, the 1873 conversion, not on the 1868 sales.",["NC"]],
  ["It does not claim any land, does not ask the court to value any stock, and does not reopen the earlier lawsuits. The damages sought are $1,875.",["NC"]],
- ["It pleads Union Pacific's file of answers to holders: more than one hundred inquiries from more than eighty holders and families, 1907 to 1980, and a 1929 memo recommending one counsel-approved letter for all of them.",["EXD","NC"]],
+ ["It pleads Union Pacific's file of answers to holders: more than one hundred inquiries from more than eighty holders and families, 1907 to 1980, and a 1929 memo recommending that one counsel-approved form be used for all inquiries about this stock.",["EXD","NC"]],
  ["It asks the jury to find in writing whether the 2011 answer was materially misleading and whether the conversion was withheld on purpose.",["NC"]]
  ],rel:["answer","texas"]}
 ];
@@ -101,7 +101,7 @@ var CSS='.lvc{max-width:880px;margin:0 auto;padding:28px 16px 60px;font-family:L
 function nameOf(id){for(var i=0;i<C.length;i++)if(C[i].id===id)return C[i].title;return id;}
 window.__lvCase=function(el){
  if(!el)return;
- var h='<style>'+CSS+'</style><div class="lvc"><h1>The Case</h1><p class="sub">Every court filing on Certificate No. 1656, in order, with the record behind each statement.</p><div class="three"><div class="three-h">Three suits, three different questions</div><p><b>2015, the certificate itself.</b> The value of its 300 shares and the interest promised on its back. Decided on delay alone; the merits were never reached.</p><p><b>2020, another company\'s books.</b> Ten of twenty Texas and Pacific shares recorded in L. S. Thorne\'s name. Not Certificate No. 1656.</p><p><b>2026, the 2011 answer.</b> Whether Union Pacific\'s written answer about the certificate was materially misleading.</p></div><div class="rail">';
+ var h='<style>'+CSS+'</style><div class="lvc"><h1>The Case</h1><p class="sub">Every court filing on Certificate No. 1656, in order, with the record behind each statement.</p><div class="three"><div class="three-h">Three suits, three different questions</div><p><b>2015, the certificate itself.</b> The value of its 300 shares and the interest promised on its back. Decided on laches alone (a defense that can bar a claim brought too long after the events); the merits were never reached.</p><p><b>2020, another company\'s books.</b> Ten of twenty Texas and Pacific shares recorded in L. S. Thorne\'s name. Not Certificate No. 1656.</p><p><b>2026, the 2011 answer.</b> Whether Union Pacific\'s written answer about the certificate was materially misleading.</p></div><div class="rail">';
  C.forEach(function(c){
   c.pts.forEach(function(p){if(p[1].length>1)p[1]=p[1].filter(function(k){return k!=="NC";});});
   var order=[];c.pts.forEach(function(p){p[1].forEach(function(k){if(order.indexOf(k)<0)order.push(k);});});

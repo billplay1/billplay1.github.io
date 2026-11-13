@@ -31,6 +31,8 @@ function eraOf(y){y=Math.floor(y);for(var i=0;i<ERAS.length;i++)if(y>=ERAS[i][0]
 function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
 function dash(s){return String(s==null?"":s).replace(/(\d)\s*[\u2013\u2014]\s*(\d)/g,"$1 to $2").replace(/\s*[\u2013\u2014]\s*/g,": ").replace(/:\s*:/g,":");}
 window.__lvTlDash=dash;
+function fmtE(e){return e&&e.display_date?String(e.display_date):fmt(e&&e.year);}
+window.__lvTlFmt=fmtE;
 function fmt(W){var P=Math.floor(W),D=W-P;if(D<.001)return String(P);var le=P%4===0&&P%100!==0||P%400===0?366:365,ce=Math.round(D*le),ae=new Date(P,0,1);ae.setDate(ae.getDate()+ce-1);return ae.toLocaleString("en-US",{month:"short"})+" "+ae.getDate()+", "+P;}
 function events(){var T=(window.__LV&&window.__LV.TimelineEvent)||[];return T.filter(function(e){return !e.hidden;}).slice().sort(function(a,b){return a.year-b.year;});}
 function byId(id){var E=events();for(var i=0;i<E.length;i++)if(E[i].id===id)return E[i];return null;}
@@ -111,15 +113,16 @@ var START=[
  "In 1868 the railroad's property was sold at foreclosure sales, and in 1872 the company was consolidated into the Texas and Pacific Railway.",
  "In 1888 a large part of the Texas and Pacific's land was placed in a new trust, the Texas Pacific Land Trust.",
  "From 1907 on, holders of the old Southern Pacific shares wrote to the railroad, and the railroad kept a file of its answers to them that runs from 1907 to 1980.",
- "The certificate stayed in the Thorne family and passed to John Stephen Thorne, whose lawsuits over it are set out step by step on <a href=\"/TheCase\" data-lvx-go=\"/TheCase\">The Case</a>; the most recent, a fraud claim over the railroad's 2011 answer, is pending in Douglas County, Nebraska."];
+ "The certificate stayed in the Thorne family and passed to John Stephen Thorne, whose lawsuits over it are set out step by step on <a href=\"/TheCase\" data-lvx-go=\"/TheCase\">The Case</a>; the most recent, a fraud claim over the railroad's 2011 answer, was brought in a complaint dated November 9, 2026, in the District Court of Douglas County, Nebraska."];
 var GLOSS=[
  ["SPRR","Southern Pacific Railroad Company of Texas, the Marshall railroad company that issued Certificate No. 1656 in 1859. It is not the later California Southern Pacific."],
  ["T&P","The Texas and Pacific Railway Company, chartered by Congress in 1871. The SPRR was consolidated into it in 1872."],
- ["C&TRCC","The California and Texas Railway Construction Company, a Pennsylvania company formed in 1872 to build the Texas and Pacific line."],
+ ["C&TRCC","The California and Texas Railway Construction Company, a Pennsylvania company chartered in 1871 as the Domain Land Company and renamed in 1872 to build the Texas and Pacific line."],
  ["TPLT / TPL","Texas Pacific Land Trust, created in 1888 to hold Texas and Pacific lands. Today it is Texas Pacific Land Corporation."],
  ["UP","Union Pacific Railroad. It acquired the Missouri Pacific in 1982, and with it the Texas and Pacific."],
- ["Laches","A defense that can bar a claim when the person bringing it waited too long and the delay harmed the other side."],
- ["Quiet title","A lawsuit asking a court to declare who owns property and to settle competing claims to it."]];
+ ["Laches","A defense that can bar a claim brought too long after the events."],
+ ["Thorne I / Thorne II","Thorne's 2015 and 2020 federal lawsuits against Union Pacific, set out on The Case."],
+ ["UP_ numbers","Union Pacific's page numbers on the documents it produced in Thorne I, such as UP_003884."]];
 
 function topHtml(){
  var seen=false;try{seen=localStorage.getItem("lvTlStartSeen")==="1";}catch(e){}
@@ -136,12 +139,12 @@ function topHtml(){
 
 var root=null,st={g:"all",l:"",q:""},ctxIds=[];
 function matchP(e){if(!group(e,st.g))return false;if(st.l&&layer(e)!==st.l)return false;
- if(st.q){var q=st.q.toLowerCase();if(((e.title||"")+" "+(e.description||"")+" "+(e.significance||"")+" "+(e.legal_basis||"")+" "+fmt(e.year)).toLowerCase().indexOf(q)<0)return false;}return true;}
+ if(st.q){var q=st.q.toLowerCase();if(((e.title||"")+" "+(e.description||"")+" "+(e.significance||"")+" "+(e.legal_basis||"")+" "+fmtE(e)).toLowerCase().indexOf(q)<0)return false;}return true;}
 function renderList(){if(!root)return;var E=events(),list=root.querySelector(".lvx-list"),h="",last=-1,n=0;ctxIds=[];
  E.forEach(function(e){if(!matchP(e))return;n++;ctxIds.push(e.id);var er=eraOf(e.year);
   if(er!==last){h+='<h3 class="lvx-era" id="lvx-era-'+er+'">'+esc(ERAS[er][3])+'<small>'+esc(ERAS[er][2])+'</small></h3>';last=er;}
   var L=LMAP[layer(e)];
-  h+='<button type="button" class="lvx-card" data-ev="'+esc(e.id)+'" style="border-left-color:'+L[2]+'"><div class="top"><span class="lay" style="color:'+L[2]+'">'+esc(L[1])+'</span><span class="dt">'+esc(fmt(e.year))+'</span></div><div class="tt">'+esc(dash(e.title))+'</div></button>';});
+  h+='<button type="button" class="lvx-card" data-ev="'+esc(e.id)+'" style="border-left-color:'+L[2]+'"><div class="top"><span class="lay" style="color:'+L[2]+'">'+esc(L[1])+'</span><span class="dt">'+esc(fmtE(e))+'</span></div><div class="tt">'+esc(dash(e.title))+'</div></button>';});
  list.innerHTML=h||'<div class="lvx-empty">No events match. Try another word or tap All.</div>';
  root.querySelector(".lvx-count").textContent="Showing "+n+" of "+E.length+" events";
  root.querySelectorAll("[data-era]").forEach(function(b){b.style.display=list.querySelector("#lvx-era-"+b.getAttribute("data-era"))?"":"none";});}
@@ -158,7 +161,7 @@ function draw(id){var e=byId(id);if(!e)return false;curId=id;var L=LMAP[layer(e)
  var h='<div class="lvx-dv" role="dialog" aria-modal="true" aria-labelledby="lvx-h" style="border-left-color:'+L[2]+'">'+
   '<div class="lvx-bar"><button type="button" class="lvx-btn" data-nav="-1" aria-label="Earlier event"'+(ix>0?'':' disabled')+'>&larr; Earlier</button><span class="sp">'+(ix>-1?(ix+1)+' of '+ids.length:'')+'</span><button type="button" class="lvx-btn" data-nav="1" aria-label="Later event"'+(ix>-1&&ix<ids.length-1?'':' disabled')+'>Later &rarr;</button><button type="button" class="lvx-btn lvx-x" aria-label="Close">Close</button></div>'+
   '<div class="lvx-body"><span class="lvx-pill" style="color:'+L[2]+';border:1px solid '+L[2]+'"><i class="lv-sw" style="background:'+L[2]+'"></i>'+esc(L[1])+'</span>'+
-  '<div class="lvx-date">'+esc(fmt(e.year))+'</div><h2 id="lvx-h">'+esc(dash(e.title))+'</h2>'+
+  '<div class="lvx-date">'+esc(fmtE(e))+'</div><h2 id="lvx-h">'+esc(dash(e.title))+'</h2>'+
   (e.description&&String(e.description).trim()?'<div class="lvx-desc">'+esc(dash(e.description))+'</div>':'')+
   (pos?'<section class="lvx-pos"><h3>Thorne\'s position</h3><div>'+esc(dash(pos))+'</div></section>':'')+
   (e.legal_basis&&String(e.legal_basis).trim()?'<section class="lvx-src"><h3>Sources</h3>'+srcHtml(e.legal_basis)+'</section>':'')+
